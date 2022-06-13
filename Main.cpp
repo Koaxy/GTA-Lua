@@ -25,19 +25,7 @@ int l_my_print(lua_State* L) {
     endpost();
     return 0;
 }
-static const struct luaL_Reg printlib[] = {
-  {"print", l_my_print},
-  {NULL, NULL} /* end of array */
-};
 
-extern int luaopen_luamylib(lua_State* L)
-{
-    lua_getglobal(L, "_G");
-    // luaL_register(L, NULL, printlib); // for Lua versions < 5.2
-    luaL_setfuncs(L, printlib, 0);  // for Lua versions 5.2 or greater
-    lua_pop(L, 1);
-    return 1;
-}
 
 namespace StoredPlayerNames
 {
@@ -95,7 +83,7 @@ int main()
 
     States::L = lua_newthread(States::L);
 
-    luaopen_luamylib(States::L);
+    
 	
     lua_pushcfunction(States::L, l_my_print);
 	lua_setglobal(States::L, "print");
